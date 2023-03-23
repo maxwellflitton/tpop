@@ -25,6 +25,11 @@ class LocationCacheAdapter:
             car = self.fake_cache.add_car(car)
         return car
 
+    def move_car(self, car: Car) -> Car:
+        self.true_cache.update_car_position(car=car)
+        if car.fake_position_index is not None:
+            self.fake_cache.update_car_position(car=car)
+
     def get_neighbours(self, car: Car) -> Dict[LocationCacheType, List[int]]:
         """
         Gets the neighbours of a car.

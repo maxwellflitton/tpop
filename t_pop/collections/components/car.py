@@ -44,7 +44,7 @@ class Car:
         self.true_y: int = y
         self.fake_x: Optional[int] = None
         self.fake_y: Optional[int] = None
-        self.velocity: int = self._generate_velocity()
+        self.velocity: np.array = self._generate_velocity()
         self.range_of_sight: float = 0.1
         self.position_history: List[Tuple[int, int]]  = []
         self.honest: bool = True
@@ -82,6 +82,51 @@ class Car:
         self.fake_x = fake_x
         self.fake_y = fake_y
         self.honest = False
+
+    def move_position(self, time: float, x_min: int, x_max: int, y_min: int, y_max: int) -> None:
+        """
+        Moves the car real coordinates based on the self.velocity.
+
+        :param time: the duration of the move
+        :return: None
+        """
+        inverse = False
+
+        provisional_x = (self.velocity[0] * time) * self.true_x
+        provisional_y = (self.velocity[1] * time) * self.true_y
+
+        if provisional_x > x_max or provisional_x < x_min:
+            inverse = True
+        if provisional_y > y_max or provisional_y < y_min:
+            inverse = True
+
+        if inverse is True:
+            time = time * -1
+            self.true_x += (self.velocity[0] * time)
+            self.true_y += (self.velocity[1] * time)
+        else:
+            self.true_x = provisional_x
+            self.true_y = provisional_y
+
+    def move_fake_position(self, time: float, x_min: int, x_max: int, y_min: int, y_max: int) -> None:
+
+        inverse = False
+
+        provisional_x = (self.velocity[0] * time) * self.fake_x
+        provisional_y = (self.velocity[1] * time) * self.fake_y
+
+        if provisional_x > x_max or provisional_x < x_min:
+            inverse = True
+        if provisional_y > y_max or provisional_y < y_min:
+            inverse = True
+
+        if inverse is True:
+            time = time * -1
+            self.fake_x += (self.velocity[0] * time)
+            self.fake_y += (self.velocity[1] * time)
+        else:
+            self.fake_x = provisional_x
+            self.fake_y = provisional_y
 
     @property
     def x(self) -> int:
