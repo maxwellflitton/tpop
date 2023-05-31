@@ -25,7 +25,7 @@ class SimulationEnvironment:
         # assign lying cars too
 
 def environment_update(car_list, dt, environment):
-
+    # TODO => refactor this for the TwoDLocationGuardAdapter as the environment
     for car in car_list:
         environment.assign(car)
 
@@ -33,6 +33,7 @@ def environment_update(car_list, dt, environment):
             car.move(dt, environment)
         else:
             car.move_fake_position(dt, environment)
+            car.move_position(dt, environment)
         car.neighbours = set()
 
         car.add_neighbours(environment)
