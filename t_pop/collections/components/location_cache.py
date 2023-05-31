@@ -69,6 +69,9 @@ class LocationCache(list):
         """
         Returns a list of the indices of the cars in range_of_sight of the given car.
 
+        Can be used to get the fake car positions from the fake position of the car
+        Can be used to get the true car positions from the true position of the car
+
         :param car: the car whose range of sight is to be checked
         :return: a list of the indices of the cars in range_of_sight of the given car
         """
@@ -81,6 +84,9 @@ class LocationCache(list):
     def get_inverse_cars_in_range(self, car: Car) -> List[int]:
         """
         Returns a list of the indices of the cars in range_of_sight of the given car in the opposite cache.
+
+        Can be used to get the fake car positions from the true position of the car
+        Can be used to get the true car positions from the fake position of the car
 
         :param car: the car whose range of sight is to be checked
         :return: a list of the indices of the cars in range_of_sight of the given car from the opposite cache
